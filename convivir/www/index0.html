@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="ui-mobile">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" href="css/lib/jquery.mobile-1.4.5.css">
+        <script src="js/lib/jquery-1.11.3.js"></script>
+        <script>
+        $(document).bind('mobileinit',function(){
+            $.mobile.changePage.defaults.changeHash = false;
+            $.mobile.hashListeningEnabled = false;
+            $.mobile.pushStateEnabled = false;
+        });
+        </script>
+        <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+        <script>
+    		$( document ).on( "pagecreate", function() {
+    			$( "body > [data-role='panel']" ).panel();
+    			$( "body > [data-role='panel'] [data-role='listview']" ).listview();
+    		});
+    		$( document ).one( "pageshow", function() {
+    			$( "body > [data-role='header']" ).toolbar();
+    			$( "body > [data-role='header'] [data-role='navbar']" ).navbar();
+    		});
+  	   </script>
+        <title>Hello World</title>
+    </head>
+    <body class="ui-mobile-viewport ui-overlay-a">
+      <div data-role="page" class="ui-responsive-panel" id="panel-responsive-page1" data-title="Panel responsive page" data-url="panel-responsive-page1">
+          <div data-role="header">
+              <h1>Panel responsive</h1>
+              <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+              <!--<a href="#add-form" data-icon="gear" data-iconpos="notext">Add</a>-->
+          </div><!-- /header -->
+          <div role="main" class="ui-content">
+              <h1>Panel responsive</h1>
+              <p>Hola Convivir, hay mucho por hacer</p>
+              <div data-demo-html="#panel-responsive-page1"></div><!--/demo-html -->
+              <br>
+              <br>
+              <br>
+          </div><!-- /content -->
+          <div data-role="panel" data-display="push" data-theme="b" id="nav-panel">
+              <ul data-role="listview">
+                  <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
+                      <li><a href="#panel-responsive-page2">Accordion</a></li>
+                      <li><a href="#panel-responsive-page2">Ajax Navigation</a></li>
+              </ul>
+          </div><!-- /panel -->
+      </div>
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>
