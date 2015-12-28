@@ -27,6 +27,7 @@
                 $("body > [data-role='header'] [data-role='navbar']").navbar();
             });
         </script>
+        <script src="js/producto.js"></script>
         <title>Convivir</title>
     </head>
     <body>
@@ -59,7 +60,7 @@
                 <a href="#inside-a" class="ui-btn ui-shadow ui-corner-all ui-btn-inline">Open right panel</a>
 
             </div><!-- /content -->
-
+            
             <div data-role="panel" id="inside-a" data-position="right" data-display="overlay" data-theme="b">
                 <ul data-role="listview">
                     <li data-icon="back"><a href="#" data-rel="close">Close</a></li>
@@ -68,7 +69,7 @@
                 </ul>
             </div>
 
-            <div data-role="footer" data-position="fixed">
+<!--            <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
                         <li><a href="index.html" class="ui-btn-active ui-state-persist">Page A</a></li>
@@ -76,15 +77,68 @@
                         <li><a href="page-c.html">Page C</a></li>
                     </ul>
                 </div>
-            </div><!-- /header -->
+            </div> /header -->
 
         </div><!-- /page -->
 
+        <div data-role="page" id="pagina2">
+            <form class="ui-filterable">
+<!--            <div class="ui-field-contain">
+                    <label for="select-native-1">Buscar</label>
+                    <select name="select-native-1" id="select-native-1" data-mini="true">
+                            <option value="1">Alimentos</option>
+                            <option value="2">Medicamentos</option>
+                </select>
+            </div>-->
+<!--            <div class="ui-field-contain">
+                <label for="select-native-2">Buscar:</label>               
+                <select name="select-native-2" id="select-native-2" data-mini="true" multiple="multiple" data-native-menu="false">
+                    <option>Seleccione....</option>
+                    <option value="1">Alimentos</option>
+                    <option value="2">Medicamentos</option>
+                </select>
+            </div>-->
+            <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-mini="true" data-type="horizontal">
+                <legend>Buscar:</legend>
+                <div class="ui-controlgroup-controls">
+                    <div class="ui-checkbox">
+                        <label for="checkbox-alimentos" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Alimentos</label>
+                        <input type="checkbox" name="checkbox-alimentos" id="checkbox-alimentos" value="1">
+                    </div>
+                    <div class="ui-checkbox">
+                        <label for="checkbox-medicamentos" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Medicamentos</label>
+                        <input type="checkbox" name="checkbox-medicamentos" id="checkbox-medicamentos" value="2">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-mini="true">
+                <legend>Buscar en:</legend>
+                <div class="ui-controlgroup-controls">
+                    <div class="ui-checkbox">
+                        <label for="checkbox-producto" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Nombre Producto</label>
+                        <input type="checkbox" name="checkbox-producto" id="checkbox-producto">
+                    </div>
+                    <div class="ui-checkbox">
+                        <label for="checkbox-categoria" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Categoría</label>
+                        <input type="checkbox" name="checkbox-categoria" id="checkbox-categoria">
+                    </div>
+                    <div class="ui-checkbox">
+                        <label for="checkbox-empresa" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-last-child">Empresa</label>
+                        <input type="checkbox" name="checkbox-empresa" id="checkbox-empresa">
+                    </div>
+                </div>
+                <input id="autocomplete-input" data-type="search" placeholder="Buscar productos...">
+            </fieldset>
+        </form>
+        <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
+        </div>
+        
+        
         <div data-role="panel" id="outside" data-theme="b" data-display="overlay">
             <ul data-role="listview">
-                <li data-icon="back"><a href="#" data-rel="close">Close</a></li>
+                <li data-icon="delete"><a href="#" data-rel="close">Cerrar</a></li>
                 <li><a href="paginas/celiaquia.html">Celiaquía</a></li>
-                <li><a href="paginas/productos.html">Productos</a></li>
+                <li><a href="#pagina2">Productos</a></li>
                 <li>Reveal</li>
             </ul>
         </div>
