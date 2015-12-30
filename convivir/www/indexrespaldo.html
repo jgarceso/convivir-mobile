@@ -9,12 +9,22 @@
         <link rel="stylesheet" href="css/lib/jquery.mobile-1.4.5.css">
         <link rel="stylesheet" href="css/convivir.css">
         <script src="js/lib/jquery-1.11.3.js"></script>
+        <script>
+            $(document).bind('mobileinit', function () {
+                $.mobile.changePage.defaults.changeHash = false;
+                $.mobile.hashListeningEnabled = false;
+                $.mobile.pushStateEnabled = false;
+            });
+        </script>
         <script src="js/lib/jquery.mobile-1.4.5.js"></script>
         <script>
             $(document).on("pagecreate", function () {
                 $("body > [data-role='panel']").panel();
                 $("body > [data-role='panel'] [data-role='listview']").listview();
+            });
+            $(document).one("pageshow", function () {
                 $("body > [data-role='header']").toolbar();
+                $("body > [data-role='header'] [data-role='navbar']").navbar();
             });
         </script>
         <script src="js/producto.js"></script>
@@ -26,9 +36,19 @@
             <h1 class="convivir-header"><img src="imagenes/logo-convivir.png"></h1>
 
             <a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
-        </div>
+            <div data-role="tabs">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="index.html">Page A</a></li>
+                        <li><a href="paginas/celiaquia.html" data-ajax="false">Page B</a></li>
+                        <li><a href="page-c.html">Page C</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /header -->
+
         <div data-role="page" id="a">
-        
+
             <div role="main" class="ui-content">
 
                 <h2>Page A</h2>
@@ -49,10 +69,35 @@
                 </ul>
             </div>
 
+<!--            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="index.html" class="ui-btn-active ui-state-persist">Page A</a></li>
+                        <li><a href="page-b.html">Page B</a></li>
+                        <li><a href="page-c.html">Page C</a></li>
+                    </ul>
+                </div>
+            </div> /header -->
+
         </div><!-- /page -->
 
         <div data-role="page" id="pagina2">
             <form id="form-buscar" class="ui-filterable">
+<!--            <div class="ui-field-contain">
+                    <label for="select-native-1">Buscar</label>
+                    <select name="select-native-1" id="select-native-1" data-mini="true">
+                            <option value="1">Alimentos</option>
+                            <option value="2">Medicamentos</option>
+                </select>
+            </div>-->
+<!--            <div class="ui-field-contain">
+                <label for="select-native-2">Buscar:</label>               
+                <select name="select-native-2" id="select-native-2" data-mini="true" multiple="multiple" data-native-menu="false">
+                    <option>Seleccione....</option>
+                    <option value="1">Alimentos</option>
+                    <option value="2">Medicamentos</option>
+                </select>
+            </div>-->
             <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-mini="true" data-type="horizontal">
                 <legend>Buscar:</legend>
                 <div class="ui-controlgroup-controls">
