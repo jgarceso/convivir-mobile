@@ -4,7 +4,7 @@ var productoPage = {
 
     $('#btn-buscar').on('click', function () {
         var textBusqueda = $("#autocomplete-input").val();
-
+         $.mobile.loading("show",{text:"Cargando...",textVisible:true});
         $.ajax({
                 url: "http://jparcompany.com/convivir/api/Producto/buscar",
                 dataType: "json",
@@ -16,10 +16,11 @@ var productoPage = {
                 data: me.obtenerParametrosBusqueda(textBusqueda),
                 success: function (resultado) {
                     me.mostrarResultadosBusqueda(resultado);
+                    $.mobile.loading("hide");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    var bna = "";
-                    alert(thrownError);
+                    $.mobile.loading("hide");
+                    alert("Ha ocurrido un error. Intente nuevamente.");
                 }
              });
     });
@@ -42,7 +43,6 @@ var productoPage = {
         html += "<li data-role='list-divider'>Productos encontrados: (" + data.length + ")</li>";
         for (var i = 0; i < data.length; i++) {
             html += "<li>"
-            //html+="<h2><div class='circulo-estado-verde'></div>"+ data[i].Producto +"</h2>";
             html += "<h2>" + me.obtenerEstadoProducto(data[i].IdEstadoCertificacion) + data[i].Producto + "</h2>";
             html += "<p><strong>" + data[i].Empresa + "</strong></p>";
             html += "<p>" + data[i].Categoria + "</p>";
@@ -103,4 +103,5 @@ $(document).on("pagecreate", function () {
 
 $(document).on("pageshow", function () {
     $('#form-buscar')[0].reset();
+    $("#contenedor-busqueda").html('');
 });
