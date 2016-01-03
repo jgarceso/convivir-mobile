@@ -27,7 +27,7 @@
 
             <a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
         </div>
-        <div data-role="page" id="a">
+        <div data-role="page" id="inicio-convivir">
 
             <div role="main" class="ui-content">
 
@@ -41,17 +41,17 @@
 
             </div><!-- /content -->
 
-            <div data-role="panel" id="inside-a" data-position="right" data-display="overlay" data-theme="b">
+<!--            <div data-role="panel" id="inside-a" data-position="right" data-display="overlay" data-theme="b">
                 <ul data-role="listview">
                     <li data-icon="back"><a href="#" data-rel="close">Close</a></li>
                     <li>Page A</li>
                     <li>Overlay</li>
                 </ul>
-            </div>
+            </div>-->
 
         </div><!-- /page -->
 
-        <div data-role="page" id="pagina2">
+        <div data-role="page" id="buscador-productos">
             <div class="pagina-default">
                 <form id="form-buscar" class="ui-filterable">
                     <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-mini="true" data-type="horizontal">
@@ -68,7 +68,7 @@
                         </div>
                     </fieldset>
                     <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-mini="true">
-                        <legend>Buscar en:</legend>
+                        <legend>Por:</legend>
                         <div class="ui-controlgroup-controls">
                             <div class="ui-checkbox">
                                 <label for="checkbox-producto" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Nombre Producto</label>
@@ -86,7 +86,7 @@
                     </fieldset>
                     <div>
                         <div class="div-input-buscar">
-                            <input id="autocomplete-input" data-type="text" placeholder="Buscar productos...">
+                            <input id="autocomplete-input" data-type="text" data-clear-btn="true" placeholder="Escriba para buscar...">
                         </div>
                         <div class="div-btn-buscar">
                             <a href="#" id="btn-buscar" class="ui-btn ui-shadow ui-corner-all ui-icon-search ui-btn-icon-notext" data-iconpos="notext"></a>
@@ -104,9 +104,8 @@
         <div data-role="panel" id="outside" data-theme="b" data-display="overlay">
             <ul data-role="listview">
                 <li data-icon="delete"><a href="#" data-rel="close">Cerrar</a></li>
-                <li><a href="paginas/celiaquia.html">Celiaquía</a></li>
-                <li><a href="#pagina2">Productos</a></li>
-                <li>Reveal</li>
+                <li><a href="#inicio-convivir">Inicio</a></li>
+                <li><a href="#buscador-productos">Productos</a></li>
             </ul>
         </div>
 
