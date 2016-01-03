@@ -2,3 +2,41 @@
     overflow: visible !important;
     padding: 0.2em 0 !important;
 }
+
+.pagina-default{
+    padding-left: 10px;
+    padding-right: 10px !important;
+}
+
+.div-input-buscar{
+    float: left;
+    min-width: 80%;
+}
+
+.div-btn-buscar{
+    float: left;
+    margin-left: 10px;
+    padding-top: 4px;
+}
+
+.circulo-estado-verde, .circulo-estado-amarillo, .circulo-estado-rojo{
+   width: 16px;
+   height: 16px;
+   float:left;
+   margin-right: 3px;
+   -moz-border-radius: 50px; 
+   -webkit-border-radius: 50px; 
+   border-radius: 50px;    
+}
+
+.circulo-estado-verde { 
+   background:#5cb85c; 
+}
+
+.circulo-estado-rojo { 
+   background:#F00707; 
+}
+
+.circulo-estado-amarillo { 
+   background:#F1F107; 
+}
