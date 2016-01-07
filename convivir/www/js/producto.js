@@ -2,12 +2,12 @@ var productoPage = {
     inicializar: function () {
         var me = this;
 
-    $('#btn-buscar').on('click', function () {
-        var textBusqueda = $("#autocomplete-input").val();
-         $.mobile.loading("show",{text:"Cargando...",textVisible:true});
-        $.ajax({
-                url: "http://jparcompany.com/convivir/api/Producto/buscar",
-                dataType: "json",
+        $('#btn-buscar').on('click', function () {
+            var textBusqueda = $("#autocomplete-input").val();
+            $.mobile.loading("show", {text: "Cargando...", textVisible: true});
+            $.ajax({
+                                url: "http://jparcompany.com/convivir/api/Producto/buscar",
+                                dataType: "json",
                 type: 'POST',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', "Basic " + btoa('userAdminConvivir' + ":" + 'a?{TO53i..'));
@@ -15,6 +15,7 @@ var productoPage = {
                 crossDomain: true,
                 data: me.obtenerParametrosBusqueda(textBusqueda),
                 success: function (resultado) {
+                    me.setearPaginacion();
                     me.mostrarResultadosBusqueda(resultado);
                     $.mobile.loading("hide");
                 },
@@ -22,14 +23,23 @@ var productoPage = {
                     $.mobile.loading("hide");
                     alert("Ha ocurrido un error. Intente nuevamente.");
                 }
-             });
-    });
-    $("#form-buscar").submit(function(event){
-       event.preventDefault();
-       $('#btn-buscar').focus(); 
-       $('#btn-buscar').click();  
-    });
-},
+                 });
+        });
+        $("#form-buscar").submit(function (event) {
+            event.preventDefault();
+            $('#btn-buscar').focus();
+            $('#btn-buscar').click();
+        });
+
+        $('#resultado-busqueda').on({
+            popupbeforeposition: function () {
+                var h = $(window).height();
+                $("#resultado-busqueda").css("height", h);
+                $("#resultado-busqueda").css("width", $(window).width());
+            }
+
+        });
+    },
     mostrarResultadosBusqueda: function (data) {
         var me = this;
         var html = "";
@@ -52,6 +62,27 @@ var productoPage = {
         html += "</ul>";
         contenedor.html(html);
         $("#listado-busqueda").listview().trigger("create");
+        $('#resultado-busqueda').popup("open");
+    },
+    setearPaginacion: function () {
+        $('#contenedor-paginador').bootpag({
+            total: 50,
+            page: 2,
+            maxVisible: 5,
+            leaps: true,
+            firstLastUse: true,
+            first: '←',
+            last: '→',
+            wrapClass: 'pagination',
+            activeClass: 'active',
+            disabledClass: 'disabled',
+            nextClass: 'next',
+            prevClass: 'prev',
+            lastClass: 'last',
+            firstClass: 'first'
+        }).on("page", function (event, num) {
+            //$(".content4").html("Page " + num); // or some ajax content loading...
+        });
     },
     obtenerEstadoProducto: function (idEstado) {
         var claseCss = "";
@@ -97,7 +128,7 @@ var productoPage = {
 };
 
 
-$(document).on("pagecreate", function () {
+$(document).on("pagecreate", "#buscador-productos", function () {
     productoPage.inicializar();
 });
 
