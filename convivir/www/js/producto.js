@@ -22,6 +22,7 @@ var productoPage = {
         });
     },
     realizarBusqueda: function (crearPaginacion, pagina, obtenerTotal) {
+        var me = this;
         var textBusqueda = $("#autocomplete-input").val();
         $.mobile.loading("show", {text: "Cargando...", textVisible: true});
         $.ajax({
@@ -34,7 +35,12 @@ var productoPage = {
             crossDomain: true,
             data: me.obtenerParametrosBusqueda(textBusqueda, pagina, obtenerTotal),
             success: function (resultado) {
-                if (crearPaginacion && resultado.Datos.length > 0)
+                if (resultado.Datos.length === 0) {
+                    $("#contenedor-busqueda").html('');
+                    $.mobile.loading("hide");
+                    return;
+                }
+                if (crearPaginacion)
                     me.setearPaginacion(resultado.Total);
                 me.mostrarResultadosBusqueda(resultado.Datos);
                 $.mobile.loading("hide");
@@ -50,10 +56,6 @@ var productoPage = {
         var html = "";
         var contenedor = $("#contenedor-busqueda");
 
-        if (data.length < 0) {
-            contenedor.html('');
-            return;
-        }
         html = '<ul id ="listado-busqueda" data-role="listview" data-inset="true">';
         html += "<li data-role='list-divider'>Productos encontrados: (" + data.length + ")</li>";
         for (var i = 0; i < data.length; i++) {
@@ -75,24 +77,30 @@ var productoPage = {
         var resto = totalFilas / me.largoPagina;
         if (resto > 0)
             totalPaginas += 1;
-        $('#contenedor-paginador').bootpag({
-            total: totalPaginas,
-            page: 1,
-            maxVisible: 5,
-            leaps: true,
-            firstLastUse: true,
-            first: '←',
-            last: '→',
-            wrapClass: 'pagination',
-            activeClass: 'active',
-            disabledClass: 'disabled',
-            nextClass: 'next',
-            prevClass: 'prev',
-            lastClass: 'last',
-            firstClass: 'first'
-        }).on("page", function (event, num) {
-            me.realizarBusqueda(false, num, false);
-        });
+
+        if (me.paginador === undefined) {
+            me.paginador = $('#contenedor-paginador').bootpag({
+                total: totalPaginas,
+                page: 1,
+                maxVisible: 5,
+                leaps: true,
+                firstLastUse: true,
+                first: '←',
+                last: '→',
+                wrapClass: 'pagination',
+                activeClass: 'active',
+                disabledClass: 'disabled',
+                nextClass: 'next',
+                prevClass: 'prev',
+                lastClass: 'last',
+                firstClass: 'first'
+            });
+            me.paginador.on("page", function (event, num) {
+                me.realizarBusqueda(false, num, false);
+            });
+        }else{
+             me.paginador.bootpag({total: totalPaginas});
+        }
     },
     obtenerEstadoProducto: function (idEstado) {
         var claseCss = "";
