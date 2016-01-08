@@ -1,29 +1,10 @@
 var productoPage = {
+    largoPagina: 20,
     inicializar: function () {
         var me = this;
 
         $('#btn-buscar').on('click', function () {
-            var textBusqueda = $("#autocomplete-input").val();
-            $.mobile.loading("show", {text: "Cargando...", textVisible: true});
-            $.ajax({
-                                url: "http://jparcompany.com/convivir/api/Producto/buscar",
-                                dataType: "json",
-                type: 'POST',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', "Basic " + btoa('userAdminConvivir' + ":" + 'a?{TO53i..'));
-                },
-                crossDomain: true,
-                data: me.obtenerParametrosBusqueda(textBusqueda),
-                success: function (resultado) {
-                    me.setearPaginacion();
-                    me.mostrarResultadosBusqueda(resultado);
-                    $.mobile.loading("hide");
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $.mobile.loading("hide");
-                    alert("Ha ocurrido un error. Intente nuevamente.");
-                }
-                 });
+            me.realizarBusqueda(true, 1, true);
         });
         $("#form-buscar").submit(function (event) {
             event.preventDefault();
@@ -39,6 +20,30 @@ var productoPage = {
             }
 
         });
+    },
+    realizarBusqueda: function (crearPaginacion, pagina, obtenerTotal) {
+        var textBusqueda = $("#autocomplete-input").val();
+        $.mobile.loading("show", {text: "Cargando...", textVisible: true});
+        $.ajax({
+                            url: "http://jparcompany.com/convivir/api/Producto/buscar",
+                            dataType: "json",
+            type: 'POST',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Basic " + btoa('userAdminConvivir' + ":" + 'a?{TO53i..'));
+            },
+            crossDomain: true,
+            data: me.obtenerParametrosBusqueda(textBusqueda, pagina, obtenerTotal),
+            success: function (resultado) {
+                if (crearPaginacion && resultado.Datos.length > 0)
+                    me.setearPaginacion(resultado.Total);
+                me.mostrarResultadosBusqueda(resultado.Datos);
+                $.mobile.loading("hide");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $.mobile.loading("hide");
+                alert("Ha ocurrido un error. Intente nuevamente.");
+            }
+             });
     },
     mostrarResultadosBusqueda: function (data) {
         var me = this;
@@ -64,10 +69,15 @@ var productoPage = {
         $("#listado-busqueda").listview().trigger("create");
         $('#resultado-busqueda').popup("open");
     },
-    setearPaginacion: function () {
+    setearPaginacion: function (totalFilas) {
+        var me = this;
+        var totalPaginas = parseInt(totalFilas / me.largoPagina);
+        var resto = totalFilas / me.largoPagina;
+        if (resto > 0)
+            totalPaginas += 1;
         $('#contenedor-paginador').bootpag({
-            total: 50,
-            page: 2,
+            total: totalPaginas,
+            page: 1,
             maxVisible: 5,
             leaps: true,
             firstLastUse: true,
@@ -81,7 +91,7 @@ var productoPage = {
             lastClass: 'last',
             firstClass: 'first'
         }).on("page", function (event, num) {
-            //$(".content4").html("Page " + num); // or some ajax content loading...
+            me.realizarBusqueda(false, num, false);
         });
     },
     obtenerEstadoProducto: function (idEstado) {
@@ -99,7 +109,8 @@ var productoPage = {
         }
         return "<div class='" + claseCss + "'></div>";
     },
-    obtenerParametrosBusqueda: function (strBuscar) {
+    obtenerParametrosBusqueda: function (strBuscar, pagina, incluirTotal) {
+        var me = this;
         var checkAlimentos = $('#checkbox-alimentos')[0];
         var checkMedicamentos = $('#checkbox-medicamentos')[0];
         var tipos = "";
@@ -119,7 +130,9 @@ var productoPage = {
                 subcategoria: $('#checkbox-categoria')[0].checked,
                 empresa: $('#checkbox-empresa')[0].checked
             },
-            limite: 20,
+            inicio: me.largoPagina * (pagina - 1),
+            largoPagina: me.largoPagina,
+            incluirTotal: incluirTotal,
             strBusqueda: strBuscar
         };
 
