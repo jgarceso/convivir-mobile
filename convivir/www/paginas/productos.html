@@ -1,56 +1,119 @@
-<html>
+<!DOCTYPE html>
+<html class="ui-mobile">
     <head>
-         <script src="js/lib/jquery-1.11.3.js"></script>
-         <script>
-             $(document).bind('mobileinit', function () {
-                 $.mobile.changePage.defaults.changeHash = false;
-                 $.mobile.hashListeningEnabled = false;
-                 $.mobile.pushStateEnabled = false;
-             });
-         </script>
-         <script src="js/lib/jquery.mobile-1.4.5.js"></script>
-          <script>
-                 $( document ).on( "pagecreate", function() {
-                         $( "body > [data-role='panel']" ).panel();
-                 });
-            </script>
-        <script src="js/producto.js"></script>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" href="../css/lib/jquery.mobile-1.4.5.css">
+        <link rel="stylesheet" href="../css/convivir.css">
+        <link href="../js/plugins/pagination/css/bootpag.css" rel="stylesheet" type="text/css"/>
+        <script src="../js/lib/jquery-1.11.3.js"></script>
+        <script src="../js/lib/jquery.mobile-1.4.5.js"></script>
+        <script src="../js/plugins/pagination/js/jquery.bootpag.min.js" type="text/javascript"></script>
+        <script>
+            $(document).on("pagecreate", function () {
+                $("body > [data-role='panel']").panel();
+                $("body > [data-role='panel'] [data-role='listview']").listview();
+                $("body > [data-role='header']").toolbar();
+            });
+        </script>
+        <script src="../js/producto.js"></script>
+
+        <title>Convivir</title>
     </head>
     <body>
-        <form class="ui-filterable">
-<!--            <div class="ui-field-contain">
-                    <label for="select-native-1">Buscar</label>
-                    <select name="select-native-1" id="select-native-1" data-mini="true">
-                            <option value="1">Alimentos</option>
-                            <option value="2">Medicamentos</option>
-                </select>
-            </div>-->
-            <div class="ui-field-contain">
-                <label for="select-native-2">Buscar:</label>               
-                <select name="select-native-2" id="select-native-2" data-mini="true">
-                    <option value="1">Alimentos</option>
-                    <option value="2">Medicamentos</option>
-                </select>
-            </div>
-            <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-mini="true">
-                <div role="heading" class="ui-controlgroup-label"><legend>Buscar en:</legend></div>
-                <div class="ui-controlgroup-controls ">
-                    <div class="ui-checkbox">
-                        <label for="checkbox-v-2a" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Nombre Producto</label>
-                        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
-                    </div>
-                    <div class="ui-checkbox">
-                        <label for="checkbox-v-2b" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Categoría</label>
-                        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
-                    </div>
-                    <div class="ui-checkbox">
-                        <label for="checkbox-v-2c" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-last-child">Empresa</label>
-                        <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
-                    </div>
+
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <h1 class="convivir-header"><img src="../imagenes/logo-convivir.png"></h1>
+            <a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
+        </div>
+<!--        <div data-role="page" id="inicio-convivir">
+            <div role="main" class="pagina-default">
+                <div class="ui-corner-all custom-corners">
+                      <div class="ui-bar ui-bar-b header-convivir">
+                            <h3>Acerca de Convivir</h3>
+                          </div>
+                    <h4>Quienes somos</h4>
+                    <p>La Fundación Convivir o Fundación de Intolerancia al Gluten, nació el 6 de diciembre de 2003, fecha en que se publicó en el Diario Oficial el Decreto Supremo N° 103 del Ministerio 
+                        de Justicia mediante el cual se le otorgó la personalidad jurídica.</p>
+                    <p>Fundación Convivir es una institución sin fines de lucro, cuyo propósito es mejorar la calidad de vida de las personas celíacas en todo el país, sin distingo de nivel socioeconómico, edad, ni ubicación geográfica.</p>
+                    <p>Desde su creación, la fundación ha concentrado sus esfuerzos en promover una alimentación y cuidado médico responsable de la enfermedad celíaca entre quienes la padecen, sus familiares y relaciones directas.</p>
                 </div>
-                <input id="autocomplete-input" data-type="search" placeholder="Buscar productos...">
-            </fieldset>
-        </form>
-     <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
+            </div>
+        </div>-->
+
+        <div data-role="page" id="buscador-productos" data-cache="never">
+            <div role="main" class="ui-content">
+                <form id="form-buscar" class="ui-filterable">
+                    <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-mini="true" data-type="horizontal">
+                        <legend>Buscar:</legend>
+                        <div class="ui-controlgroup-controls">
+                            <div class="ui-checkbox">
+                                <label for="checkbox-alimentos" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Alimentos</label>
+                                <input type="checkbox" name="checkbox-alimentos" id="checkbox-alimentos" value="1">
+                            </div>
+                            <div class="ui-checkbox">
+                                <label for="checkbox-medicamentos" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Medicamentos</label>
+                                <input type="checkbox" name="checkbox-medicamentos" id="checkbox-medicamentos" value="2">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-mini="true">
+                        <legend>Por:</legend>
+                        <div class="ui-controlgroup-controls">
+                            <div class="ui-checkbox">
+                                <label for="checkbox-producto" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Nombre Producto</label>
+                                <input type="checkbox" name="checkbox-producto" id="checkbox-producto">
+                            </div>
+                            <div class="ui-checkbox">
+                                <label for="checkbox-categoria" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Categoría</label>
+                                <input type="checkbox" name="checkbox-categoria" id="checkbox-categoria">
+                            </div>
+                            <div class="ui-checkbox">
+                                <label for="checkbox-empresa" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-last-child">Empresa</label>
+                                <input type="checkbox" name="checkbox-empresa" id="checkbox-empresa">
+                            </div>
+                        </div>                
+                    </fieldset>
+                    <div>
+                        <div class="div-input-buscar">
+                            <input id="autocomplete-input" data-type="text" data-clear-btn="true" placeholder="Escriba para buscar...">
+                        </div>
+                        <div class="div-btn-buscar">
+                            <a href="#"  id="btn-buscar" class="ui-btn ui-shadow ui-corner-all ui-icon-search ui-btn-icon-notext" data-iconpos="notext"></a>
+                        </div>
+                    </div>
+                </form>
+
+                <div data-role="popup" id="resultado-busqueda" data-theme="a">
+                    <div data-role="header">
+                        <h1 class="convivir-header"><img src="../imagenes/logo-convivir.png"></h1>
+                        <a href="#" data-icon="back" data-rel="back" data-iconpos="notext"></a>
+                        
+                    </div>
+                    <p id="texto-resultados"></p>
+                    <div id="contenedor-paginador" class="contenedor-paginador">
+
+                    </div>
+                    <div id="contenedor-busqueda" class="contenedor-busqueda">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div data-role="panel" id="outside" data-theme="b" data-display="overlay">
+            <ul data-role="listview">
+                <li data-icon="delete"><a href="#" data-rel="close">Cerrar menú</a></li>
+                <li><a href="#inicio-convivir">Inicio</a></li>
+                <li><a href="#buscador-productos">Productos</a></li>
+                <li><a href="paginas/celiaquia.html" data-ajax="false">celiaquia</a></li>
+
+            </ul>
+        </div>
+
     </body>
 </html>

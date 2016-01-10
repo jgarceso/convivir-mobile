@@ -1,0 +1,56 @@
+<html>
+    <head>
+         <script src="js/lib/jquery-1.11.3.js"></script>
+         <script>
+             $(document).bind('mobileinit', function () {
+                 $.mobile.changePage.defaults.changeHash = false;
+                 $.mobile.hashListeningEnabled = false;
+                 $.mobile.pushStateEnabled = false;
+             });
+         </script>
+         <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+          <script>
+                 $( document ).on( "pagecreate", function() {
+                         $( "body > [data-role='panel']" ).panel();
+                 });
+            </script>
+        <script src="js/producto.js"></script>
+    </head>
+    <body>
+        <form class="ui-filterable">
+<!--            <div class="ui-field-contain">
+                    <label for="select-native-1">Buscar</label>
+                    <select name="select-native-1" id="select-native-1" data-mini="true">
+                            <option value="1">Alimentos</option>
+                            <option value="2">Medicamentos</option>
+                </select>
+            </div>-->
+            <div class="ui-field-contain">
+                <label for="select-native-2">Buscar:</label>               
+                <select name="select-native-2" id="select-native-2" data-mini="true">
+                    <option value="1">Alimentos</option>
+                    <option value="2">Medicamentos</option>
+                </select>
+            </div>
+            <fieldset data-role="controlgroup" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-mini="true">
+                <div role="heading" class="ui-controlgroup-label"><legend>Buscar en:</legend></div>
+                <div class="ui-controlgroup-controls ">
+                    <div class="ui-checkbox">
+                        <label for="checkbox-v-2a" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-first-child">Nombre Producto</label>
+                        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+                    </div>
+                    <div class="ui-checkbox">
+                        <label for="checkbox-v-2b" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Categoría</label>
+                        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+                    </div>
+                    <div class="ui-checkbox">
+                        <label for="checkbox-v-2c" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off ui-last-child">Empresa</label>
+                        <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
+                    </div>
+                </div>
+                <input id="autocomplete-input" data-type="search" placeholder="Buscar productos...">
+            </fieldset>
+        </form>
+     <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
+    </body>
+</html>

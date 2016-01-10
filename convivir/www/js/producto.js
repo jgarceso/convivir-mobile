@@ -38,11 +38,12 @@ var productoPage = {
                 if (resultado.Datos.length === 0) {
                     $("#contenedor-busqueda").html('');
                     $.mobile.loading("hide");
+                    alert('No se han encontrado productos según sus criterios de búsqueda.');
                     return;
                 }
                 if (crearPaginacion)
                     me.setearPaginacion(resultado.Total);
-                me.mostrarResultadosBusqueda(resultado.Datos);
+                me.mostrarResultadosBusqueda(resultado.Datos, pagina);
                 $.mobile.loading("hide");
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -51,13 +52,13 @@ var productoPage = {
             }
              });
     },
-    mostrarResultadosBusqueda: function (data) {
+    mostrarResultadosBusqueda: function (data, pagina) {
         var me = this;
         var html = "";
         var contenedor = $("#contenedor-busqueda");
 
         html = '<ul id ="listado-busqueda" data-role="listview" data-inset="true">';
-        html += "<li data-role='list-divider'>Productos encontrados: (" + data.length + ")</li>";
+
         for (var i = 0; i < data.length; i++) {
             html += "<li>"
             html += "<h2>" + me.obtenerEstadoProducto(data[i].IdEstadoCertificacion) + data[i].Producto + "</h2>";
@@ -68,11 +69,13 @@ var productoPage = {
         }
         html += "</ul>";
         contenedor.html(html);
+        me.actualizarMensajeBusqueda(pagina,data.length);
         $("#listado-busqueda").listview().trigger("create");
         $('#resultado-busqueda').popup("open");
     },
     setearPaginacion: function (totalFilas) {
         var me = this;
+        me.totalFilas = totalFilas;
         var totalPaginas = parseInt(totalFilas / me.largoPagina);
         var resto = totalFilas / me.largoPagina;
         if (resto > 0)
@@ -99,8 +102,17 @@ var productoPage = {
                 me.realizarBusqueda(false, num, false);
             });
         }else{
-             me.paginador.bootpag({total: totalPaginas});
+             me.paginador.bootpag({total: totalPaginas, page:1}); 
         }
+    },
+    actualizarMensajeBusqueda: function(pagina, largoResultados){
+        var me = this;
+        var inicio, final;
+       
+       inicio = me.largoPagina * (pagina - 1) + 1;
+       final = me.largoPagina * (pagina - 1)+largoResultados;
+       
+       $('#texto-resultados').html('Mostrando '+inicio+'-'+final+' de '+me.totalFilas +' productos.');     
     },
     obtenerEstadoProducto: function (idEstado) {
         var claseCss = "";
@@ -154,6 +166,8 @@ $(document).on("pagecreate", "#buscador-productos", function () {
 });
 
 $(document).on("pageshow", function () {
-    $('#form-buscar')[0].reset();
-    $("#contenedor-busqueda").html('');
+    if($('#form-buscar')[0])
+        $('#form-buscar')[0].reset();
+    if($("#contenedor-busqueda"))
+        $("#contenedor-busqueda").html('');
 });
