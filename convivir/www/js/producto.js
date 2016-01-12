@@ -121,10 +121,10 @@ var productoPage = {
                 claseCss = "circulo-estado-verde";
                 break;
             case "2":
-                claseCss = "circulo-estado-rojo";
+                claseCss = "circulo-estado-amarillo";
                 break;
             case "3":
-                claseCss = "circulo-estado-amarillo";
+                claseCss = "circulo-estado-rojo";
                 break;
         }
         return "<div class='" + claseCss + "'></div>";
