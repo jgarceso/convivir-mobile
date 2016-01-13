@@ -48,7 +48,7 @@ var productoPage = {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 $.mobile.loading("hide");
-                alert("Ha ocurrido un error. Intente nuevamente.");
+                alert("Ha ocurrido un error. Intente nuevamente. "+thrownError);
             }
              });
     },
